@@ -1,4 +1,4 @@
-pandas
-openpyxl
-watchdoc
-dotenv
+pandas>=2.3.3
+openpyxl>=3.1.5
+watchdog>=6.0
+python-dotenv>=1.2.1
