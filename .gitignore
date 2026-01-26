@@ -4,4 +4,4 @@ __pycache__
 data/incoming/**/*.xlsx
 data/incoming/**/*.xls
 data/incoming/**/*.csv
-data/db/
+data/db/*.db
