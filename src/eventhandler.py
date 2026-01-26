@@ -4,8 +4,9 @@ import logging
 from pathlib import Path
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
-from config.config import SUPPORTED_EXT, ANALOG_RAW_DIR, INSTRUMENT_RAW_DIR
-from config.logging_config import setup_logging
+from src.config.config import SUPPORTED_EXT, ANALOG_RAW_DIR, INSTRUMENT_RAW_DIR
+from src.config.logging_config import setup_logging
+from src.handler.analog_test import handle_analog_test
 
 setup_logging()
 logger = logging.getLogger(__name__)
@@ -29,7 +30,12 @@ class EventHandler(FileSystemEventHandler):
 
         if "analog_test" in path.parts:
             logger.info("Analog test result detected: %s", path)
-            # handle_analog_test(path)
+
+            try:
+                handle_analog_test(path)
+            except Exception as e:
+                logger.exception("Failed to process analog test file: %s", path)
+                logging.exception("Error: %s", e)
         elif "instrument_analysis" in path.parts:
             logger.info("Analyzer result detected: %s", path)
             # handle_instrument_analysis(path)
