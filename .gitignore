@@ -1,6 +1,4 @@
 __pycache__
 .venv
 .env
-data/incoming/**/*.xlsx
-data/incoming/**/*.xls
-data/incoming/**/*.csv
+data/incoming/**/*
