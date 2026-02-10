@@ -7,9 +7,9 @@ logger = logging.getLogger(__name__)
 
 
 def handle_analog_test(path: Path):
-    logger.info("Start processing analog test file: %s", path.name)
+    logger.info("アナログ試験結果の解析を開始します: %s", path.name)
 
     df = read_analog_test_excel(path)
     insert_analog_test_results(df)
 
-    logger.info("Inserted %d records from %s", len(df), path.name)
+    logger.info("%d 行のデータのINSERTが完了しました。", len(df))

@@ -18,29 +18,31 @@ class EventHandler(FileSystemEventHandler):
             return
 
         path = Path(str(event.src_path))
-        logger.info("File detected: %s", path)
+        logger.info("ファイルを検出しました: %s", path)
 
         if path.name.startswith("~$"):
-            logger.error("Is a temporary file: %s", path.name)
+            logger.error("一時ファイルです: %s", path.name)
             return
 
         if path.suffix.lower() not in SUPPORTED_EXT:
-            logger.error("Unsupported file extension: %s", path.name)
+            logger.error("サポートされていない形式のファイルです: %s", path.name)
             return
 
         if "analog_test" in path.parts:
-            logger.info("Analog test result detected: %s", path)
+            logger.info("アナログ試験結果を検出しました: %s", path)
 
             try:
                 handle_analog_test(path)
             except Exception as e:
-                logger.exception("Failed to process analog test file: %s", path)
-                logging.exception("Error: %s", e)
+                logger.exception(
+                    "アナログ試験結果の解析中にエラーが発生しました: %s", path
+                )
+                logging.exception("エラー: %s", e)
         elif "instrument_analysis" in path.parts:
-            logger.info("Analyzer result detected: %s", path)
+            logger.info("分析機器の試験結果を検出しました: %s", path)
             # handle_instrument_analysis(path)
         else:
-            logger.warning("Unknown data type: %s", path)
+            logger.warning("不明なデータ型です: %s", path)
 
 
 observer = Observer()
