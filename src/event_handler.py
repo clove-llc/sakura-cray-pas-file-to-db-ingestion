@@ -1,14 +1,11 @@
-import time
 import logging
 
 from pathlib import Path
-from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
-from src.config.config import SUPPORTED_EXT, ANALOG_RAW_DIR, INSTRUMENT_RAW_DIR
-from src.config.logging_config import setup_logging
+from src.config.config import SUPPORTED_EXT
 from src.handler.analog_test import handle_analog_test
 
-setup_logging()
+
 logger = logging.getLogger(__name__)
 
 
@@ -43,17 +40,3 @@ class EventHandler(FileSystemEventHandler):
             # handle_instrument_analysis(path)
         else:
             logger.warning("不明なデータ型です: %s", path)
-
-
-observer = Observer()
-observer.schedule(EventHandler(), path=str(ANALOG_RAW_DIR), recursive=True)
-observer.schedule(EventHandler(), path=str(INSTRUMENT_RAW_DIR), recursive=True)
-observer.start()
-
-try:
-    while True:
-        time.sleep(1)
-except KeyboardInterrupt:
-    observer.stop()
-
-observer.join()
