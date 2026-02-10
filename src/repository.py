@@ -1,21 +1,15 @@
-import sqlite3
-from pathlib import Path
-
-DB_PATH = Path("data/db/app.db")
+from src.config.postgres import get_connection
 
 
 def insert_analog_test_results(df):
-    conn = sqlite3.connect(DB_PATH)
-    cur = conn.cursor()
-
-    cur.executemany(
-        """
+    sql = """
         INSERT INTO analog_test_results (
-            resipe_id, task_id, temperature_c, operator, test_date
-        ) VALUES (?, ?, ?, ?, ?)
-        """,
-        df.values.tolist(),
-    )
+            recipe_id, task_id, temperature_c, operator, test_date
+        ) VALUES (%s, %s, %s, %s, %s)
+    """
 
-    conn.commit()
-    conn.close()
+    records = df.values.tolist()
+
+    with get_connection() as conn:
+        with conn.cursor() as cur:
+            cur.executemany(sql, records)
