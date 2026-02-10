@@ -3,7 +3,7 @@ from src.config.postgres import get_connection
 
 def insert_analog_test_results(df):
     sql = """
-        INSERT INTO analog_test_results (
+        INSERT INTO sakura_cray_pas.analog_test_results (
             recipe_id, task_id, temperature_c, operator, test_date
         ) VALUES (%s, %s, %s, %s, %s)
     """
