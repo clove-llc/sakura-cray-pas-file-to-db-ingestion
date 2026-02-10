@@ -1,25 +1,6 @@
 ## 1. セットアップ手順
 
-### 1.1 SQLite のインストール
-
-```bash
-sudo apt install sqlite3
-```
-
----
-
-### 1.2 データベースの作成
-
-```bash
-mkdir -p data/db
-sqlite3 data/db/app.db < data/db/init.sql
-```
-
-data/db/app.db が作成されます。
-
----
-
-### 1.3 Python 仮想環境の作成
+### 1.1 Python 仮想環境の作成
 
 ```bash
 python3 -m venv .venv
@@ -28,7 +9,7 @@ source .venv/bin/activate
 
 ---
 
-### 1.4 依存ライブラリのインストール
+### 1.2 依存ライブラリのインストール
 
 ```bash
 pip install -r requirements.txt
@@ -43,7 +24,7 @@ pip install -r requirements.txt
 以下のコマンドでファイル監視を開始します。
 
 ```bash
-python3 -m src.eventhandler
+python3 main.py
 ```
 
 これにより、`data/incoming/analog_test/raw`フォルダと`data/incoming/instrument_analysis/raw`フォルダの監視が開始されます。
@@ -74,8 +55,4 @@ python3 -m src.eventhandler
 ## 4. 処理結果
 
 - Excel ファイルが検知されると自動で読み込まれます
-- データは以下のデータベースに挿入されます
-
-```text
-data/db/app.db
-```
+- データはデータベースに挿入されます
